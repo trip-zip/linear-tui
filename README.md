@@ -1,6 +1,6 @@
 # Linear TUI
 
-A dual CLI and Terminal User Interface (TUI) application for Linear.app integration. Built with Go and designed to enable programmatic access to Linear issues for development workflows.
+A unified CLI and Terminal User Interface (TUI) application for Linear.app integration. Built with Go and designed to enable programmatic access to Linear issues for development workflows. Single command `linear-tui` provides both interactive TUI mode and CLI functionality.
 
 ## Features
 
@@ -19,13 +19,13 @@ A dual CLI and Terminal User Interface (TUI) application for Linear.app integrat
 
 ### Quick Install
 
-Install directly from GitHub:
+Install the unified TUI/CLI tool directly from GitHub:
 
 ```bash
 go install github.com/trip-zip/linear-tui@latest
 ```
 
-After installation, the `linear` command will be available in your terminal.
+After installation, the `linear-tui` command will be available in your terminal.
 
 ### Setup
 
@@ -48,11 +48,8 @@ For development or local modifications:
 git clone https://github.com/trip-zip/linear-tui.git
 cd linear-tui
 
-# Install TUI
+# Install the unified command
 go install .
-
-# Install CLI
-go install ./cmd/linear-cli
 ```
 
 ## Usage
@@ -60,8 +57,8 @@ go install ./cmd/linear-cli
 ### Interactive TUI Mode
 ```bash
 # Run the interactive terminal interface (default)
-linear
-linear tui
+linear-tui
+linear-tui tui
 ```
 
 ### CLI Commands
@@ -69,40 +66,40 @@ linear tui
 #### Get Your Assigned Issues
 ```bash
 # List all issues assigned to you
-linear me
+linear-tui me
 
 # Filter your issues by status
-linear me -s "In Progress"
-linear me -s "Backlog"
-linear me -s "Green Light"
+linear-tui me -s "In Progress"
+linear-tui me -s "Backlog"
+linear-tui me -s "Green Light"
 
 # Show issues with full descriptions (helpful for Claude Code)
-linear me -d
-linear me -s "In Progress" -d
+linear-tui me -d
+linear-tui me -s "In Progress" -d
 ```
 
 #### Get All Workspace Issues
 ```bash
 # List all issues in the workspace
-linear list
+linear-tui list
 
 # Filter all issues by status
-linear list -s "Done"
-linear list -s "Triage"
+linear-tui list -s "Done"
+linear-tui list -s "Triage"
 
 # Show issues with full descriptions
-linear list -d
-linear list -s "Backlog" -d
+linear-tui list -d
+linear-tui list -s "Backlog" -d
 ```
 
 #### Help
 ```bash
 # Show general help
-linear --help
+linear-tui --help
 
 # Show command-specific help
-linear me --help
-linear list --help
+linear-tui me --help
+linear-tui list --help
 ```
 
 ### Common Status Values
@@ -118,19 +115,19 @@ linear list --help
 ### Developer Workflow
 ```bash
 # Check what you're currently working on
-linear me -s "In Progress"
+linear-tui me -s "In Progress"
 
 # See what's ready to work on next
-linear me -s "Green Light"
+linear-tui me -s "Green Light"
 
 # Review your backlog
-linear me -s "Backlog"
+linear-tui me -s "Backlog"
 
 # Find all high-priority work in the team
-linear list -s "In Progress"
+linear-tui list -s "In Progress"
 
 # Get full context for implementing a specific issue
-linear me -s "In Progress" -d
+linear-tui me -s "In Progress" -d
 ```
 
 ### Claude Code Integration
@@ -138,17 +135,17 @@ This tool is specifically designed to work with Claude Code for AI-assisted deve
 
 ```bash
 # Claude can fetch your current work
-linear me -s "In Progress"
+linear-tui me -s "In Progress"
 
 # Claude can find approved features to implement
-linear list -s "Green Light" 
+linear-tui list -s "Green Light" 
 
 # Claude can help prioritize from your backlog
-linear me -s "Backlog"
+linear-tui me -s "Backlog"
 
 # Get full issue descriptions for Claude to understand requirements
-linear me -s "In Progress" -d
-linear list -s "Green Light" -d
+linear-tui me -s "In Progress" -d
+linear-tui list -s "Green Light" -d
 ```
 
 ## Output Format
@@ -171,21 +168,21 @@ Use the `-d` or `--description` flag to include full issue descriptions in the o
 
 ```bash
 # Examples with descriptions
-linear me -d                    # All your issues with descriptions
-linear me -s "Backlog" -d       # Your backlog with descriptions
-linear list -s "Triage" -d      # All triage issues with descriptions
+linear-tui me -d                    # All your issues with descriptions
+linear-tui me -s "Backlog" -d       # Your backlog with descriptions
+linear-tui list -s "Triage" -d      # All triage issues with descriptions
 ```
 
 ## Building
 
 ```bash
 # Build the application
-go build -o linear .
+go build -o linear-tui .
 
 # Run the built binary
-./linear          # Launch TUI (default)
-./linear me -s "In Progress"  # Use CLI commands
-./linear list -d              # List all issues with descriptions
+./linear-tui                        # Launch TUI (default)
+./linear-tui me -s "In Progress"    # Use CLI commands
+./linear-tui list -d                # List all issues with descriptions
 ```
 
 ## Development
