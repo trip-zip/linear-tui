@@ -46,4 +46,5 @@ This uses the 'viewer' GraphQL query to identify the current user and filter iss
 
 func init() {
 	meCmd.Flags().StringVarP(&statusFilter, "status", "s", "", "Filter your issues by status (e.g., 'In Progress', 'Backlog', 'Done')")
+	meCmd.Flags().BoolVarP(&showDescription, "description", "d", false, "Show issue descriptions")
 }

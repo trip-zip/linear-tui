@@ -37,4 +37,5 @@ var listCmd = &cobra.Command{
 
 func init() {
 	listCmd.Flags().StringVarP(&statusFilter, "status", "s", "", "Filter issues by status (e.g., 'In Progress', 'Backlog', 'Done')")
+	listCmd.Flags().BoolVarP(&showDescription, "description", "d", false, "Show issue descriptions")
 }

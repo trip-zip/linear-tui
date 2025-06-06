@@ -28,6 +28,11 @@ func displayIssues(issues []Issue, description string) {
 		if issue.Priority > 0 {
 			fmt.Printf(" | Priority: %d", issue.Priority)
 		}
-		fmt.Printf("\n   ID: %s\n\n", issue.ID)
+		fmt.Printf("\n   ID: %s", issue.ID)
+		
+		if showDescription && issue.Description != "" {
+			fmt.Printf("\n   Description: %s", issue.Description)
+		}
+		fmt.Printf("\n\n")
 	}
 }

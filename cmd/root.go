@@ -8,7 +8,8 @@ import (
 )
 
 var (
-	statusFilter string
+	statusFilter    string
+	showDescription bool
 )
 
 var rootCmd = &cobra.Command{
