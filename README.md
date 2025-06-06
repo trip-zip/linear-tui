@@ -13,28 +13,48 @@ A dual CLI and Terminal User Interface (TUI) application for Linear.app integrat
 ## Installation
 
 ### Prerequisites
-- Go 1.24.3 or later
+- Go 1.21 or later
 - Linear.app account with API access
 - Linear Personal API Key
 
+### Quick Install
+
+Install directly from GitHub:
+```bash
+go install github.com/trip-zip/linear-tui/cmd/linear@latest
+```
+
+After installation, the `linear` command will be available in your terminal.
+
 ### Setup
 
-1. Clone or download this repository
-2. Install dependencies:
+1. Create a `.env` file in your working directory or home config:
    ```bash
-   go mod tidy
+   # Option 1: In your current project directory
+   echo "LINEAR_API_KEY=your_personal_api_key_here" > .env
+   
+   # Option 2: In your home config (works globally)
+   mkdir -p ~/.config/linear
+   echo "LINEAR_API_KEY=your_personal_api_key_here" > ~/.config/linear/.env
    ```
-3. Create a `.env` file with your Linear API key:
-   ```
-   LINEAR_API_KEY=your_personal_api_key_here
-   ```
+
+2. Get your API key from [Linear Settings > API](https://linear.app/settings/api)
+
+### Development Install
+
+For development or local modifications:
+```bash
+git clone https://github.com/trip-zip/linear-tui.git
+cd linear-tui
+go install ./cmd/linear
+```
 
 ## Usage
 
 ### Interactive TUI Mode
 ```bash
 # Run the interactive terminal interface
-go run .
+linear
 ```
 
 ### CLI Commands
@@ -42,32 +62,32 @@ go run .
 #### Get Your Assigned Issues
 ```bash
 # List all issues assigned to you
-go run . me
+linear me
 
 # Filter your issues by status
-go run . me -s "In Progress"
-go run . me -s "Backlog"
-go run . me -s "Green Light"
+linear me -s "In Progress"
+linear me -s "Backlog"
+linear me -s "Green Light"
 ```
 
 #### Get All Workspace Issues
 ```bash
 # List all issues in the workspace
-go run . list
+linear list
 
 # Filter all issues by status
-go run . list -s "Done"
-go run . list -s "Triage"
+linear list -s "Done"
+linear list -s "Triage"
 ```
 
 #### Help
 ```bash
 # Show general help
-go run . --help
+linear --help
 
 # Show command-specific help
-go run . me --help
-go run . list --help
+linear me --help
+linear list --help
 ```
 
 ### Common Status Values
@@ -83,16 +103,16 @@ go run . list --help
 ### Developer Workflow
 ```bash
 # Check what you're currently working on
-go run . me -s "In Progress"
+linear me -s "In Progress"
 
 # See what's ready to work on next
-go run . me -s "Green Light"
+linear me -s "Green Light"
 
 # Review your backlog
-go run . me -s "Backlog"
+linear me -s "Backlog"
 
 # Find all high-priority work in the team
-go run . list -s "In Progress"
+linear list -s "In Progress"
 ```
 
 ### Claude Code Integration
@@ -100,13 +120,13 @@ This tool is specifically designed to work with Claude Code for AI-assisted deve
 
 ```bash
 # Claude can fetch your current work
-go run . me -s "In Progress"
+linear me -s "In Progress"
 
 # Claude can find approved features to implement
-go run . list -s "Green Light" 
+linear list -s "Green Light" 
 
 # Claude can help prioritize from your backlog
-go run . me -s "Backlog"
+linear me -s "Backlog"
 ```
 
 ## Output Format
@@ -123,10 +143,10 @@ Issues are displayed with:
 
 ```bash
 # Build the application
-go build -o linear-tui
+go build -o linear ./cmd/linear
 
 # Run the built binary
-./linear-tui me -s "In Progress"
+./linear me -s "In Progress"
 ```
 
 ## Development
