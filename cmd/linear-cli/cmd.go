@@ -28,6 +28,10 @@ var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all issues in the workspace",
 	Long:  `Fetch and display all issues from your Linear workspace with optional filtering.`,
+	Example: `  linear-cli list                    # List all issues
+  linear-cli list -s "In Progress"   # List issues in progress
+  linear-cli list -s "Backlog"       # List backlog issues
+  linear-cli list -s "Done"          # List completed issues`,
 	Run: func(cmd *cobra.Command, args []string) {
 		client, err := getLinearClient()
 		if err != nil {
@@ -58,6 +62,10 @@ var meCmd = &cobra.Command{
 	Short: "List issues assigned to you",
 	Long: `Fetch and display all issues assigned to the current user (based on the API key).
 This uses the 'viewer' GraphQL query to identify the current user and filter issues accordingly.`,
+	Example: `  linear-cli me                      # List your assigned issues
+  linear-cli me -s "In Progress"     # List your in-progress issues
+  linear-cli me -s "Backlog"         # List your backlog issues
+  linear-cli me -s "Green Light"     # List your approved issues`,
 	Run: func(cmd *cobra.Command, args []string) {
 		client, err := getLinearClient()
 		if err != nil {
@@ -130,28 +138,11 @@ func initCLI() {
 	rootCmd.AddCommand(listCmd)
 	rootCmd.AddCommand(meCmd)
 
-	// Add help information
-	rootCmd.SetHelpTemplate(`{{.Long}}
-
-Usage:
-  {{.UseLine}}
-
-Available Commands:
-  list        List all issues in the workspace
-  me          List issues assigned to you
-  help        Help about any command
-
-Flags:
-  -h, --help   Help for {{.Name}}
-
-Use "{{.CommandPath}} [command] --help" for more information about a command.
-
-Examples:
-  linear-cli list               # List all issues
+	// Add help information only to root command
+	rootCmd.Example = `  linear-cli list               # List all issues
   linear-cli list -s "Backlog"  # List all backlog issues
   linear-cli me                 # List your assigned issues
-  linear-cli me -s "In Progress" # List your in-progress issues
-`)
+  linear-cli me -s "In Progress" # List your in-progress issues`
 }
 
 func executeCLI() {
