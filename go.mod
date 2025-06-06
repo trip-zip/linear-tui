@@ -1,4 +1,4 @@
-module linear
+module github.com/trip-zip/linear-tui
 
 go 1.24.3
 
