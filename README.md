@@ -20,11 +20,18 @@ A dual CLI and Terminal User Interface (TUI) application for Linear.app integrat
 ### Quick Install
 
 Install directly from GitHub:
+
+**For the TUI:**
 ```bash
-go install github.com/trip-zip/linear-tui/cmd/linear@latest
+go install github.com/trip-zip/linear-tui@latest
 ```
 
-After installation, the `linear` command will be available in your terminal.
+**For the CLI:**
+```bash
+go install github.com/trip-zip/linear-tui/cmd/linear-cli@latest
+```
+
+After installation, the `linear` (TUI) and `linear-cli` commands will be available in your terminal.
 
 ### Setup
 
@@ -46,7 +53,12 @@ For development or local modifications:
 ```bash
 git clone https://github.com/trip-zip/linear-tui.git
 cd linear-tui
-go install ./cmd/linear
+
+# Install TUI
+go install .
+
+# Install CLI
+go install ./cmd/linear-cli
 ```
 
 ## Usage
@@ -62,32 +74,32 @@ linear
 #### Get Your Assigned Issues
 ```bash
 # List all issues assigned to you
-linear me
+linear-cli me
 
 # Filter your issues by status
-linear me -s "In Progress"
-linear me -s "Backlog"
-linear me -s "Green Light"
+linear-cli me -s "In Progress"
+linear-cli me -s "Backlog"
+linear-cli me -s "Green Light"
 ```
 
 #### Get All Workspace Issues
 ```bash
 # List all issues in the workspace
-linear list
+linear-cli list
 
 # Filter all issues by status
-linear list -s "Done"
-linear list -s "Triage"
+linear-cli list -s "Done"
+linear-cli list -s "Triage"
 ```
 
 #### Help
 ```bash
 # Show general help
-linear --help
+linear-cli --help
 
 # Show command-specific help
-linear me --help
-linear list --help
+linear-cli me --help
+linear-cli list --help
 ```
 
 ### Common Status Values
@@ -103,16 +115,16 @@ linear list --help
 ### Developer Workflow
 ```bash
 # Check what you're currently working on
-linear me -s "In Progress"
+linear-cli me -s "In Progress"
 
 # See what's ready to work on next
-linear me -s "Green Light"
+linear-cli me -s "Green Light"
 
 # Review your backlog
-linear me -s "Backlog"
+linear-cli me -s "Backlog"
 
 # Find all high-priority work in the team
-linear list -s "In Progress"
+linear-cli list -s "In Progress"
 ```
 
 ### Claude Code Integration
@@ -120,13 +132,13 @@ This tool is specifically designed to work with Claude Code for AI-assisted deve
 
 ```bash
 # Claude can fetch your current work
-linear me -s "In Progress"
+linear-cli me -s "In Progress"
 
 # Claude can find approved features to implement
-linear list -s "Green Light" 
+linear-cli list -s "Green Light" 
 
 # Claude can help prioritize from your backlog
-linear me -s "Backlog"
+linear-cli me -s "Backlog"
 ```
 
 ## Output Format
@@ -142,11 +154,15 @@ Issues are displayed with:
 ## Building
 
 ```bash
-# Build the application
-go build -o linear ./cmd/linear
+# Build the TUI
+go build -o linear .
 
-# Run the built binary
-./linear me -s "In Progress"
+# Build the CLI
+go build -o linear-cli ./cmd/linear-cli
+
+# Run the built binaries
+./linear          # Launch TUI
+./linear-cli me -s "In Progress"  # Use CLI
 ```
 
 ## Development
