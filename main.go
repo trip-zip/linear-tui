@@ -23,8 +23,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	// Initialize and execute CLI
-	initCLI()
-	executeCLI()
+	// Launch TUI by default
+	if err := runTUI(); err != nil {
+		fmt.Printf("Error running TUI: %v\n", err)
+		os.Exit(1)
+	}
 }
 
