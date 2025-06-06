@@ -21,17 +21,11 @@ A dual CLI and Terminal User Interface (TUI) application for Linear.app integrat
 
 Install directly from GitHub:
 
-**For the TUI:**
 ```bash
 go install github.com/trip-zip/linear-tui@latest
 ```
 
-**For the CLI:**
-```bash
-go install github.com/trip-zip/linear-tui/cmd/linear-cli@latest
-```
-
-After installation, the `linear` (TUI) and `linear-cli` commands will be available in your terminal.
+After installation, the `linear` command will be available in your terminal.
 
 ### Setup
 
@@ -65,8 +59,9 @@ go install ./cmd/linear-cli
 
 ### Interactive TUI Mode
 ```bash
-# Run the interactive terminal interface
+# Run the interactive terminal interface (default)
 linear
+linear tui
 ```
 
 ### CLI Commands
@@ -74,32 +69,40 @@ linear
 #### Get Your Assigned Issues
 ```bash
 # List all issues assigned to you
-linear-cli me
+linear me
 
 # Filter your issues by status
-linear-cli me -s "In Progress"
-linear-cli me -s "Backlog"
-linear-cli me -s "Green Light"
+linear me -s "In Progress"
+linear me -s "Backlog"
+linear me -s "Green Light"
+
+# Show issues with full descriptions (helpful for Claude Code)
+linear me -d
+linear me -s "In Progress" -d
 ```
 
 #### Get All Workspace Issues
 ```bash
 # List all issues in the workspace
-linear-cli list
+linear list
 
 # Filter all issues by status
-linear-cli list -s "Done"
-linear-cli list -s "Triage"
+linear list -s "Done"
+linear list -s "Triage"
+
+# Show issues with full descriptions
+linear list -d
+linear list -s "Backlog" -d
 ```
 
 #### Help
 ```bash
 # Show general help
-linear-cli --help
+linear --help
 
 # Show command-specific help
-linear-cli me --help
-linear-cli list --help
+linear me --help
+linear list --help
 ```
 
 ### Common Status Values
@@ -115,16 +118,19 @@ linear-cli list --help
 ### Developer Workflow
 ```bash
 # Check what you're currently working on
-linear-cli me -s "In Progress"
+linear me -s "In Progress"
 
 # See what's ready to work on next
-linear-cli me -s "Green Light"
+linear me -s "Green Light"
 
 # Review your backlog
-linear-cli me -s "Backlog"
+linear me -s "Backlog"
 
 # Find all high-priority work in the team
-linear-cli list -s "In Progress"
+linear list -s "In Progress"
+
+# Get full context for implementing a specific issue
+linear me -s "In Progress" -d
 ```
 
 ### Claude Code Integration
@@ -132,13 +138,17 @@ This tool is specifically designed to work with Claude Code for AI-assisted deve
 
 ```bash
 # Claude can fetch your current work
-linear-cli me -s "In Progress"
+linear me -s "In Progress"
 
 # Claude can find approved features to implement
-linear-cli list -s "Green Light" 
+linear list -s "Green Light" 
 
 # Claude can help prioritize from your backlog
-linear-cli me -s "Backlog"
+linear me -s "Backlog"
+
+# Get full issue descriptions for Claude to understand requirements
+linear me -s "In Progress" -d
+linear list -s "Green Light" -d
 ```
 
 ## Output Format
@@ -150,28 +160,46 @@ Issues are displayed with:
 - **Assignee**: Who it's assigned to (if anyone)
 - **Priority**: Priority level (if set)
 - **ID**: Linear issue ID for API reference
+- **Description**: Full issue description (when using `-d` flag)
+
+### Description Flag
+Use the `-d` or `--description` flag to include full issue descriptions in the output. This is particularly useful for:
+- Understanding detailed requirements
+- Providing context to Claude Code for implementation
+- Getting complete information about bug reports
+- Reviewing feature specifications
+
+```bash
+# Examples with descriptions
+linear me -d                    # All your issues with descriptions
+linear me -s "Backlog" -d       # Your backlog with descriptions
+linear list -s "Triage" -d      # All triage issues with descriptions
+```
 
 ## Building
 
 ```bash
-# Build the TUI
+# Build the application
 go build -o linear .
 
-# Build the CLI
-go build -o linear-cli ./cmd/linear-cli
-
-# Run the built binaries
-./linear          # Launch TUI
-./linear-cli me -s "In Progress"  # Use CLI
+# Run the built binary
+./linear          # Launch TUI (default)
+./linear me -s "In Progress"  # Use CLI commands
+./linear list -d              # List all issues with descriptions
 ```
 
 ## Development
 
 The application is structured with:
 - `main.go` - Entry point and environment setup
-- `cmd.go` - CLI command definitions using Cobra
-- `linear.go` - Linear GraphQL API client
-- `tui.go` - Bubbletea terminal interface
+- `cmd/` - CLI command definitions using Cobra
+  - `root.go` - Root command and shared flags
+  - `me.go` - User-specific issue commands
+  - `list.go` - Workspace issue commands
+  - `tui.go` - TUI command
+  - `client.go` - Linear GraphQL API client
+  - `display.go` - Output formatting
+  - `types.go` - Data structures
 - `CLAUDE.md` - Instructions for Claude Code integration
 
 ## License
